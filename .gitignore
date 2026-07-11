@@ -1,0 +1,27 @@
+# SQLite database files
+database/keuangan.sqlite
+*.sqlite
+*.db
+
+# Environment files
+.env
+.env.*
+
+# Scratch directory (temporary/scratch/logs)
+scratch/
+.system_generated/
+.gemini/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

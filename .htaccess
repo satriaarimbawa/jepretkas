@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Redirect root ke folder public/
+RewriteRule ^$ public/ [L]
+
+# Redirect semua request ke folder public/
+RewriteRule (.*) public/$1 [L]
