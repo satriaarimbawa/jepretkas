@@ -796,7 +796,7 @@ main.main-content {
         padding-bottom: 95px; /* Tambah padding bawah agar konten tidak tertutup bottom nav */
     }
     .mobile-menu-toggle {
-        display: none; /* Sembunyikan hamburger karena navigasi dipindah ke bawah */
+        display: block; /* Tampilkan hamburger menu di mobile untuk membuka sidebar/rekening/logout */
     }
 }
 
