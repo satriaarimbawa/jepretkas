@@ -1020,3 +1020,15 @@ main.main-content {
         display: flex;
     }
 }
+
+@media (max-width: 480px) {
+    .bottom-nav-item span:not(.material-icons) {
+        display: none;
+    }
+    .bottom-nav-item span.material-icons {
+        font-size: 26px;
+    }
+    .mobile-bottom-nav {
+        height: 64px;
+    }
+}

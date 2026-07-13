@@ -1,24 +1,38 @@
 {
-  "short_name": "KeuanganPWA",
-  "name": "Sistem Keuangan Terintegrasi Bukti Foto",
-  "description": "Catat arus kas masuk dan keluar dilengkapi bukti foto struk belanja.",
+  "short_name": "JepretKas",
+  "name": "JepretKas - Catat Keuangan Struk Foto",
+  "description": "Catat arus kas masuk dan keluar yang dilengkapi bukti foto struk belanja.",
+  "id": "/?source=pwa",
+  "categories": ["finance", "productivity"],
   "icons": [
     {
       "src": "css/logo-192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "css/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
       "src": "css/logo-512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "css/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/dashboard",
-  "background_color": "#0f0f23",
+  "start_url": "./",
+  "background_color": "#0f172a",
   "theme_color": "#6366f1",
   "display": "standalone",
-  "orientation": "portrait-primary"
+  "orientation": "portrait"
 }
