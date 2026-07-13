@@ -1,3 +1,4 @@
+<?php $filter = $filters; ?>
 <div class="glass-card" style="margin-bottom: 24px;">
     <!-- Filter Form -->
     <form action="<?= BASE_URL ?>/transactions" method="GET">
@@ -26,6 +27,19 @@
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?= $cat->id ?>" <?= (string)($filter['category_id'] ?? '') === (string)$cat->id ? 'selected' : '' ?>>
                             <?= htmlspecialchars($cat->name) ?> (<?= $cat->type === 'income' ? 'Masuk' : 'Keluar' ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Rekening -->
+            <div class="filter-group" style="min-width: 150px;">
+                <label for="account_id_filter" class="form-label" style="font-size: 12px;">Rekening</label>
+                <select id="account_id_filter" name="account_id" class="form-control">
+                    <option value="">Semua Rekening</option>
+                    <?php foreach ($accounts as $acc): ?>
+                        <option value="<?= $acc->id ?>" <?= (string)($filter['account_id'] ?? '') === (string)$acc->id ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($acc->name) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -74,6 +88,7 @@
                     <th>Tanggal</th>
                     <th>Keterangan</th>
                     <th>Kategori</th>
+                    <th>Rekening</th>
                     <th style="text-align: right;">Nominal</th>
                     <th style="text-align: center;">Bukti Struk</th>
                     <th style="text-align: center;">Aksi</th>
@@ -100,6 +115,14 @@
                                 <span class="badge" style="background-color: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: #fff; display: inline-flex; align-items: center; gap: 8px;">
                                     <span class="category-dot" style="background-color: <?= htmlspecialchars($tx->category_color ?? '#6366f1') ?>"></span>
                                     <?= htmlspecialchars($tx->category_name ?? 'Lainnya') ?>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge" style="background-color: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: #fff; display: inline-flex; align-items: center; gap: 8px;">
+                                    <span class="material-icons" style="font-size: 14px; color: <?= htmlspecialchars($tx->account_color ?? '#6366f1') ?>; vertical-align: middle;">
+                                        <?= htmlspecialchars($tx->account_icon ?: 'account_balance_wallet') ?>
+                                    </span>
+                                    <?= htmlspecialchars($tx->account_name ?? 'Dompet Utama') ?>
                                 </span>
                             </td>
                             <td style="text-align: right; font-weight: 700; white-space: nowrap; color: <?= $tx->type === 'income' ? 'var(--success)' : 'var(--danger)' ?>">
@@ -139,10 +162,18 @@
                 <div class="transaction-mobile-card">
                     <div class="tx-card-header">
                         <span class="tx-card-date"><?= date('d M Y', strtotime($tx->transaction_date)) ?></span>
-                        <span class="badge" style="background-color: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: #fff; display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; font-size: 11px;">
-                            <span class="category-dot" style="background-color: <?= htmlspecialchars($tx->category_color ?? '#6366f1') ?>"></span>
-                            <?= htmlspecialchars($tx->category_name ?? 'Lainnya') ?>
-                        </span>
+                        <div style="display: flex; gap: 6px;">
+                            <span class="badge" style="background-color: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: #fff; display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; font-size: 11px;">
+                                <span class="category-dot" style="background-color: <?= htmlspecialchars($tx->category_color ?? '#6366f1') ?>"></span>
+                                <?= htmlspecialchars($tx->category_name ?? 'Lainnya') ?>
+                            </span>
+                            <span class="badge" style="background-color: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: #fff; display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 6px; font-size: 11px;">
+                                <span class="material-icons" style="font-size: 12px; color: <?= htmlspecialchars($tx->account_color ?? '#6366f1') ?>; vertical-align: middle;">
+                                    <?= htmlspecialchars($tx->account_icon ?: 'account_balance_wallet') ?>
+                                </span>
+                                <?= htmlspecialchars($tx->account_name ?? 'Dompet Utama') ?>
+                            </span>
+                        </div>
                     </div>
                     
                     <div class="tx-card-body">

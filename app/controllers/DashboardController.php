@@ -9,10 +9,12 @@
 class DashboardController extends Controller
 {
     private $transactionModel;
+    private $accountModel;
 
     public function __construct()
     {
         $this->transactionModel = new Transaction();
+        $this->accountModel = new Account();
     }
 
     /**
@@ -29,7 +31,13 @@ class DashboardController extends Controller
         // Ambil total pemasukan dan pengeluaran
         $totalIncome = $this->transactionModel->getTotalByType($userId, 'income') ?? 0;
         $totalExpense = $this->transactionModel->getTotalByType($userId, 'expense') ?? 0;
-        $balance = $totalIncome - $totalExpense;
+        
+        // Ambil data rekening dan hitung saldo total
+        $accounts = $this->accountModel->getByUser($userId);
+        $balance = 0;
+        foreach ($accounts as $acc) {
+            $balance += $acc->balance;
+        }
 
         // Ambil 5 transaksi terbaru
         $recentTransactions = $this->transactionModel->getRecent($userId, 5);
@@ -43,6 +51,7 @@ class DashboardController extends Controller
             'totalIncome' => $totalIncome,
             'totalExpense' => $totalExpense,
             'totalBalance' => $balance,
+            'accounts' => $accounts,
             'recentTransactions' => $recentTransactions,
             'monthlyData' => $monthlyData,
             'currentYear' => $currentYear

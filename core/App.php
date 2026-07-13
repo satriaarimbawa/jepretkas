@@ -36,7 +36,8 @@ class App
             $pluralMap = [
                 'transactions' => 'transaction',
                 'categories'   => 'category',
-                'reports'      => 'report'
+                'reports'      => 'report',
+                'accounts'     => 'account'
             ];
             
             $lowerName = strtolower($controllerName);

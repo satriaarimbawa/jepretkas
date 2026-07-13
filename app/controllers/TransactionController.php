@@ -9,11 +9,13 @@ class TransactionController extends Controller
 {
     private $transactionModel;
     private $categoryModel;
+    private $accountModel;
 
     public function __construct()
     {
         $this->transactionModel = new Transaction();
         $this->categoryModel = new Category();
+        $this->accountModel = new Account();
     }
 
     /**
@@ -30,6 +32,7 @@ class TransactionController extends Controller
         $filters = [
             'type' => $_GET['type'] ?? '',
             'category_id' => $_GET['category_id'] ?? '',
+            'account_id' => $_GET['account_id'] ?? '',
             'date_from' => $_GET['date_from'] ?? '',
             'date_to' => $_GET['date_to'] ?? '',
             'search' => trim($_GET['search'] ?? '')
@@ -41,11 +44,15 @@ class TransactionController extends Controller
         // Ambil kategori untuk dropdown filter
         $categories = $this->categoryModel->getByUser($userId);
 
+        // Ambil rekening untuk dropdown filter
+        $accounts = $this->accountModel->getByUser($userId);
+
         $this->view('transactions/index', [
             'pageTitle' => 'Riwayat Transaksi',
             'currentPage' => 'transactions',
             'transactions' => $transactions,
             'categories' => $categories,
+            'accounts' => $accounts,
             'filters' => $filters
         ]);
     }
@@ -71,12 +78,16 @@ class TransactionController extends Controller
             return $cat->type === 'expense';
         });
 
+        // Ambil semua rekening milik user
+        $accounts = $this->accountModel->getByUser($userId);
+
         $this->view('transactions/create', [
             'pageTitle' => 'Transaksi Baru',
             'currentPage' => 'transactions_create',
             'categories' => $categories,
             'incomeCategories' => array_values($incomeCategories),
-            'expenseCategories' => array_values($expenseCategories)
+            'expenseCategories' => array_values($expenseCategories),
+            'accounts' => $accounts
         ]);
     }
 
@@ -100,6 +111,7 @@ class TransactionController extends Controller
         $type = $_POST['type'] ?? '';
         $transactionDate = $_POST['transaction_date'] ?? '';
         $categoryId = $_POST['category_id'] ?? '';
+        $accountId = $_POST['account_id'] ?? '';
         $description = trim($_POST['description'] ?? '');
 
         // Validasi field wajib
@@ -123,6 +135,10 @@ class TransactionController extends Controller
             $errors[] = 'Kategori harus dipilih.';
         }
 
+        if (empty($accountId)) {
+            $errors[] = 'Rekening harus dipilih.';
+        }
+
         // Jika ada error validasi
         if (!empty($errors)) {
             $this->setFlash(implode(' ', $errors), 'error');
@@ -138,10 +154,19 @@ class TransactionController extends Controller
             return;
         }
 
+        // Verifikasi rekening milik user yang bersangkutan
+        $account = $this->accountModel->findByIdAndUser($accountId, $userId);
+        if (!$account) {
+            $this->setFlash('Rekening tidak valid.', 'error');
+            $this->redirect('transactions/create');
+            return;
+        }
+
         // Siapkan data transaksi
         $transactionData = [
             'user_id' => $userId,
             'category_id' => $categoryId,
+            'account_id' => $accountId,
             'type' => $type,
             'amount' => (float) $amount,
             'description' => $description,

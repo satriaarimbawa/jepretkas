@@ -76,6 +76,10 @@
                         <span class="material-icons">category</span>
                         <span>Kategori</span>
                     </a>
+                    <a href="<?= BASE_URL ?>/accounts" class="nav-link <?= ($currentPage === 'accounts') ? 'active' : '' ?>">
+                        <span class="material-icons">account_balance_wallet</span>
+                        <span>Rekening</span>
+                    </a>
                     <a href="<?= BASE_URL ?>/reports" class="nav-link <?= ($currentPage === 'reports') ? 'active' : '' ?>">
                         <span class="material-icons">assessment</span>
                         <span>Laporan</span>

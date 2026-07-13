@@ -22,9 +22,11 @@ class Transaction extends Model
      */
     public function getByUser(int $userId, array $filters = []): array
     {
-        $sql = "SELECT t.*, c.name as category_name, c.color as category_color, c.icon as category_icon 
+        $sql = "SELECT t.*, c.name as category_name, c.color as category_color, c.icon as category_icon,
+                       a.name as account_name, a.color as account_color, a.icon as account_icon 
                 FROM {$this->table} t 
                 LEFT JOIN categories c ON t.category_id = c.id 
+                LEFT JOIN accounts a ON t.account_id = a.id
                 WHERE t.user_id = :user_id";
 
         $params = [':user_id' => $userId];
@@ -39,6 +41,12 @@ class Transaction extends Model
         if (!empty($filters['category_id'])) {
             $sql .= " AND t.category_id = :category_id";
             $params[':category_id'] = $filters['category_id'];
+        }
+
+        // Filter berdasarkan rekening
+        if (!empty($filters['account_id'])) {
+            $sql .= " AND t.account_id = :account_id";
+            $params[':account_id'] = $filters['account_id'];
         }
 
         // Filter berdasarkan tanggal mulai
@@ -158,9 +166,11 @@ class Transaction extends Model
      */
     public function getRecent(int $userId, int $limit = 5): array
     {
-        $sql = "SELECT t.*, c.name as category_name, c.color as category_color, c.icon as category_icon
+        $sql = "SELECT t.*, c.name as category_name, c.color as category_color, c.icon as category_icon,
+                       a.name as account_name, a.color as account_color, a.icon as account_icon
                 FROM {$this->table} t
                 LEFT JOIN categories c ON t.category_id = c.id
+                LEFT JOIN accounts a ON t.account_id = a.id
                 WHERE t.user_id = :user_id
                 ORDER BY t.transaction_date DESC, t.created_at DESC
                 LIMIT :limit";

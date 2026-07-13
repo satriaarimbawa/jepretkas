@@ -40,8 +40,34 @@
     </div>
 </div>
 
+<!-- Daftar Rekening / Penyimpanan Uang -->
+<h3 style="font-size: 16px; font-weight: 600; color: #fff; margin-top: 24px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+    <span class="material-icons" style="color: var(--primary);">account_balance_wallet</span>
+    <span>Rincian Rekening & Dompet</span>
+</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+    <?php foreach ($accounts as $acc): ?>
+        <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 12px; position: relative; border-left: 4px solid <?= htmlspecialchars($acc->color) ?>; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span style="font-size: 14px; font-weight: 600; color: #fff;"><?= htmlspecialchars($acc->name) ?></span>
+                    <span style="font-size: 10px; color: var(--text-secondary); font-weight: 500;">
+                        <?= ($acc->type ?? 'debit') === 'credit' ? 'PayLater / Kredit' : 'Tabungan / Dompet' ?>
+                    </span>
+                </div>
+                <span class="material-icons" style="color: <?= htmlspecialchars($acc->color) ?>; font-size: 20px;">
+                    <?= htmlspecialchars($acc->icon ?: 'account_balance_wallet') ?>
+                </span>
+            </div>
+            <div style="font-size: 18px; font-weight: 700; color: <?= (($acc->type ?? 'debit') === 'credit' && $acc->balance < 0) ? 'var(--danger)' : '#fff' ?>;">
+                <?= (($acc->type ?? 'debit') === 'credit' && $acc->balance < 0) ? 'Tagihan:' : 'Saldo:' ?> Rp <?= number_format($acc->balance, 0, ',', '.') ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
 <!-- Chart & Recent Transactions Section -->
-<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 10px; align-items: start;">
     
     <!-- Chart Card -->
     <div class="glass-card">

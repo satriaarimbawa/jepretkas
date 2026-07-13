@@ -25,18 +25,31 @@
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
             <!-- Tanggal -->
             <div class="form-group">
                 <label for="transaction_date" class="form-label">Tanggal</label>
                 <input type="date" id="transaction_date" name="transaction_date" class="form-control" required value="<?= date('Y-m-d') ?>">
             </div>
 
+            <!-- Rekening -->
+            <div class="form-group">
+                <label for="account-id" class="form-label">Penyimpanan / Rekening</label>
+                <select id="account-id" name="account_id" class="form-control" required>
+                    <option value="" disabled selected>Pilih Rekening</option>
+                    <?php foreach ($accounts as $acc): ?>
+                        <option value="<?= $acc->id ?>">
+                            <?= htmlspecialchars($acc->name) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <!-- Kategori -->
             <div class="form-group">
                 <label for="category-id" class="form-label">Kategori</label>
                 <select id="category-id" name="category_id" class="form-control" required>
-                    <option value="" disabled>Pilih Kategori</option>
+                    <option value="" disabled selected>Pilih Kategori</option>
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?= $cat->id ?>" data-type="<?= htmlspecialchars($cat->type) ?>">
                             <?= htmlspecialchars($cat->name) ?>
