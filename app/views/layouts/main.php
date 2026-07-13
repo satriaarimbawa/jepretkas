@@ -136,22 +136,18 @@
             <span class="material-icons">receipt_long</span>
             <span>Riwayat</span>
         </a>
-        <a href="<?= BASE_URL ?>/analysis" class="bottom-nav-item <?= ($currentPage === 'analysis') ? 'active' : '' ?>">
-            <span class="material-icons">analytics</span>
-            <span>Analisis</span>
-        </a>
         <div class="bottom-nav-item-center-wrapper">
             <a href="<?= BASE_URL ?>/transactions/create" class="bottom-nav-item-center <?= ($currentPage === 'transactions_create') ? 'active' : '' ?>" title="Tambah Transaksi">
                 <span class="material-icons">add</span>
             </a>
         </div>
-        <a href="<?= BASE_URL ?>/categories" class="bottom-nav-item <?= ($currentPage === 'categories') ? 'active' : '' ?>">
-            <span class="material-icons">category</span>
-            <span>Kategori</span>
+        <a href="<?= BASE_URL ?>/analysis" class="bottom-nav-item <?= ($currentPage === 'analysis') ? 'active' : '' ?>">
+            <span class="material-icons">analytics</span>
+            <span>Analisis</span>
         </a>
-        <a href="<?= BASE_URL ?>/reports" class="bottom-nav-item <?= ($currentPage === 'reports') ? 'active' : '' ?>">
-            <span class="material-icons">assessment</span>
-            <span>Laporan</span>
+        <a href="#" class="bottom-nav-item" id="mobile-menu-trigger">
+            <span class="material-icons">menu</span>
+            <span>Menu</span>
         </a>
     </nav>
 

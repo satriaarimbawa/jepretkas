@@ -1,18 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Sidebar Toggle untuk Mobile
     const menuToggle = document.getElementById('mobile-toggle');
+    const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
     const sidebar = document.getElementById('sidebar');
 
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', function(e) {
+    if (sidebar) {
+        const toggleSidebar = function(e) {
             e.stopPropagation();
             sidebar.classList.toggle('active');
-        });
+        };
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', toggleSidebar);
+        }
+        if (mobileMenuTrigger) {
+            mobileMenuTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleSidebar(e);
+            });
+        }
 
         // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function(e) {
             if (window.innerWidth <= 1024 && sidebar.classList.contains('active')) {
-                if (!sidebar.contains(e.target) && e.target !== menuToggle) {
+                const isTrigger = e.target === menuToggle || 
+                                  e.target === mobileMenuTrigger || 
+                                  (mobileMenuTrigger && mobileMenuTrigger.contains(e.target));
+                if (!sidebar.contains(e.target) && !isTrigger) {
                     sidebar.classList.remove('active');
                 }
             }
