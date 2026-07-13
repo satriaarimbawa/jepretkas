@@ -101,7 +101,7 @@
                 <span style="font-weight: 700; color: var(--primary); font-size: 16px;" id="saving-percent-display">20%</span>
             </div>
             
-            <input type="range" id="saving-slider" min="10" max="50" step="5" value="20" style="width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); outline: none; cursor: pointer; accent-color: var(--primary);">
+            <input type="range" id="saving-slider" min="10" max="50" step="5" value="20" style="width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); outline: none; cursor: pointer; accent-color: var(--primary); font-size: 16px; touch-action: manipulation;">
             
             <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 6px;">
                 <span>10% (Santai)</span>

@@ -298,6 +298,12 @@ main.main-content {
     position: relative;
 }
 
+/* Cegah auto-zoom iOS pada semua elemen form (iOS zoom jika font-size < 16px) */
+input, select, textarea {
+    font-size: 16px !important;
+    touch-action: manipulation;
+}
+
 /* Forms & Inputs */
 .form-group {
     margin-bottom: 20px;
