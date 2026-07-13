@@ -106,9 +106,24 @@
             </div>
         </aside>
 
+        <!-- Sidebar Overlay (menutup sidebar saat diklik di mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
         <!-- Page Content -->
         <main class="main-content">
-            <!-- Top bar -->
+            <!-- Mobile Top Bar (hanya tampil di mobile) -->
+            <div class="mobile-topbar">
+                <a href="<?= BASE_URL ?>/dashboard" class="mobile-topbar-logo">
+                    <span class="material-icons">account_balance_wallet</span>
+                    JepretKas
+                </a>
+                <span class="mobile-topbar-title"><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : '' ?></span>
+                <div class="mobile-topbar-avatar">
+                    <?= strtoupper(substr($_SESSION['user_name'] ?? 'U', 0, 1)) ?>
+                </div>
+            </div>
+
+            <!-- Top bar Desktop -->
             <div class="top-bar">
                 <div class="page-title">
                     <h2><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'Dashboard' ?></h2>

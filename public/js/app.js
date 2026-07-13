@@ -3,35 +3,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('mobile-toggle');
     const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
     const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
 
     if (sidebar) {
+        const openSidebar = function() {
+            sidebar.classList.add('active');
+            if (sidebarOverlay) sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeSidebar = function() {
+            sidebar.classList.remove('active');
+            if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
         const toggleSidebar = function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            sidebar.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
         };
 
-        if (menuToggle) {
-            menuToggle.addEventListener('click', toggleSidebar);
-        }
-        if (mobileMenuTrigger) {
-            mobileMenuTrigger.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleSidebar(e);
-            });
+        if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+        if (mobileMenuTrigger) mobileMenuTrigger.addEventListener('click', toggleSidebar);
+
+        // Tutup sidebar saat overlay diklik
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', closeSidebar);
         }
 
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 1024 && sidebar.classList.contains('active')) {
-                const isTrigger = e.target === menuToggle || 
-                                  e.target === mobileMenuTrigger || 
-                                  (mobileMenuTrigger && mobileMenuTrigger.contains(e.target));
-                if (!sidebar.contains(e.target) && !isTrigger) {
-                    sidebar.classList.remove('active');
-                }
-            }
+        // Tutup sidebar saat link di dalam sidebar diklik (navigasi)
+        sidebar.querySelectorAll('.nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 1024) closeSidebar();
+            });
         });
     }
+
 
     // 2. Flash Message Auto Dismiss
     const flashMessages = document.querySelectorAll('.toast');
