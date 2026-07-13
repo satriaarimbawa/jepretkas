@@ -25,3 +25,6 @@ scratch/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Deployment Credentials
+deploy.config.json

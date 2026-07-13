@@ -1,0 +1,7 @@
+{
+    "host": "ftpupload.net",
+    "port": 21,
+    "username": "epiz_xxxxxx",
+    "password": "your_ftp_password_here",
+    "remote_dir": "/htdocs"
+}
